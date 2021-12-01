@@ -21,6 +21,7 @@ import org.cassandraunit.spring.CassandraUnitTestExecutionListener;
 import org.cassandraunit.spring.EmbeddedCassandra;
 import org.cassandraunit.utils.EmbeddedCassandraServerHelper;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.TestExecutionListeners;
@@ -30,6 +31,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @EmbeddedCassandra
 @TestExecutionListeners(listeners = CassandraUnitTestExecutionListener.class)
 @CassandraDataSet(value = "BDScripts/simple.cql", keyspace = "inventory")
+@Ignore
 public class TestCassandraUnit {
 
 	private CqlSession session;

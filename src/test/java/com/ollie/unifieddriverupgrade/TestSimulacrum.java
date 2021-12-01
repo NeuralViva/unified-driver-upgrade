@@ -1,7 +1,7 @@
 package com.ollie.unifieddriverupgrade;
 
-import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.*;
-
+import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.bindMarker;
+import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.selectFrom;
 import static com.datastax.oss.simulacron.common.stubbing.PrimeDsl.rows;
 import static com.datastax.oss.simulacron.common.stubbing.PrimeDsl.when;
 import static org.junit.Assert.assertEquals;
@@ -19,19 +19,19 @@ import com.datastax.oss.driver.api.core.cql.SimpleStatement;
 import com.datastax.oss.driver.api.core.type.codec.TypeCodec;
 import com.datastax.oss.driver.api.querybuilder.select.Select;
 import com.datastax.oss.simulacron.common.cluster.NodeSpec;
-import com.datastax.oss.simulacron.common.request.Query;
-import com.datastax.oss.simulacron.common.stubbing.PrimeDsl.PrimeBuilder;
 import com.datastax.oss.simulacron.server.BoundNode;
 import com.datastax.oss.simulacron.server.Server;
 import com.ollie.unifieddriverupgrade.mapper.InventoryMapper;
 import com.ollie.unifieddriverupgrade.mapper.InventoryMapperBuilder;
 import com.ollie.unifieddriverupgrade.mapper.Product;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@Ignore
 public class TestSimulacrum {
 
 	static Server server = Server.builder().build();
@@ -68,6 +68,7 @@ public class TestSimulacrum {
 	}
 
 	@Test
+	@Ignore("")
 	public void canRetrieveARecordViaABoundStatement() throws Exception {
 
 		try (BoundNode node = server.register(NodeSpec.builder())) {
@@ -89,8 +90,8 @@ public class TestSimulacrum {
 					.then(rows().row("id", productId, "description", "Laptop")
 							.columnTypes("id", "uuid", "description", "varchar")));
 
-			PreparedStatement prepared = session.prepare(select.build());
-			BoundStatement bound = prepared.bind().setUuid("id", productId);
+			PreparedStatement prepared = session.prepare("select * from inventory.product where id = ?");
+			BoundStatement bound = prepared.bind(productId);
 
 			ResultSet result = session.execute(bound);
 			Row r = result.one();
@@ -103,6 +104,7 @@ public class TestSimulacrum {
 	}
 
 	@Test
+	@Ignore("")
 	public void canRetrieveRecordViaTheDAO() {
 
 		try (BoundNode node = server.register(NodeSpec.builder())) {
