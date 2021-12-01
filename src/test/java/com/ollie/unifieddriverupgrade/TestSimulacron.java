@@ -32,7 +32,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Ignore
-public class TestSimulacrum {
+public class TestSimulacron {
 
 	static Server server = Server.builder().build();
 	TypeCodec<UUID> defaultCodec = new CqlTextToUUIDCodec();
@@ -68,7 +68,7 @@ public class TestSimulacrum {
 	}
 
 	@Test
-	@Ignore("")
+	@Ignore("Test fails as Prepared statements with params fail on Simulacron, test retained for reference")
 	public void canRetrieveARecordViaABoundStatement() throws Exception {
 
 		try (BoundNode node = server.register(NodeSpec.builder())) {
@@ -104,7 +104,7 @@ public class TestSimulacrum {
 	}
 
 	@Test
-	@Ignore("")
+	@Ignore("Test fails as Prepared statements with params fail on Simulacron, test retained for reference")
 	public void canRetrieveRecordViaTheDAO() {
 
 		try (BoundNode node = server.register(NodeSpec.builder())) {
